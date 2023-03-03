@@ -3,7 +3,14 @@
 <mapper namespace="boardMapper">
 					
 	<select id="getBoardList" resultType="boardDTO">
-		SELECT * FROM BOARD_TBL
+		SELECT 
+			BNO,
+			TITLE,
+			WRITER,
+			VIEW_CNT,
+			LIKE_CNT,
+			TO_CHAR(REGDATE,'YYYY-MM-DD') AS REGDATE
+		FROM BOARD_TBL
 	</select>
 	
 </mapper>

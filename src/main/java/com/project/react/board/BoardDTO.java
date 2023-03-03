@@ -13,6 +13,6 @@ public class BoardDTO {
 	private String content;
 	private int like_cnt;
 	private int view_cnt;
-	private Date regdate;
+	private String regdate;
 	
 }
