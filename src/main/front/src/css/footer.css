@@ -1,0 +1,25 @@
+.fontColor{
+    color:#5c818a;
+    font-size:10pt;
+}
+
+.footerDiv1{
+    width: 30%;
+    text-align: center;
+}
+
+.div1Font{
+    font-size: 20pt;
+    font-weight: bold;
+    color: #ff983e;
+    margin-left: 30px;
+}
+
+.div1Img{
+    vertical-align: middle;
+}
+
+.footerDiv2{
+    width: 70%;
+    text-align: center;
+}

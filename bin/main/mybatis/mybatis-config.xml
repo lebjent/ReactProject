@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings>
+	    <setting name="cacheEnabled" value="false"/>
+	    <setting name="localCacheScope" value="STATEMENT"/>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<!-- defaultStatementTimeout value는 초 단위 (seconds) -->
+		<setting name="defaultStatementTimeout" value="60"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.project.react.board.BoardDTO" alias="boardDTO"/>
+	</typeAliases> 
+	
+	
+</configuration>
