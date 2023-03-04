@@ -1,6 +1,5 @@
 package com.project.react.board;
 
-import java.util.Date;
 
 import lombok.Data;
 
