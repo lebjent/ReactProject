@@ -67,9 +67,19 @@ function CodeEditor(props) {//https://github.com/securingsincity/react-ace ì°¸ì¡
       fontSize={18}
       onChange={onChange}
       name='UNIQUE_ID_OF_DIV'
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
       value={value}
       width='100%'
       readOnly={!mode}
+      setOptions={{
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        showLineNumbers: true,
+        //tabSize: 2,
+      }}
     />
     <div className="tar mt30">
       <ModeButton onClick={isModeChk}>{title}</ModeButton>

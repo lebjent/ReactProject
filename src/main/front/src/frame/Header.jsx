@@ -34,10 +34,10 @@ function Header() {
       </div>
       <Nav>
         <NavLink className="nav" to='/'>Home</NavLink>
-        <NavLink className="nav" to='/ProjectInfo'>프로젝트 소개</NavLink>
-        <NavLink className="nav" to='/Board'>리액트 게시판</NavLink>
-        <NavLink className="nav" to='/StudyList'>Study리스트</NavLink>
-        <NavLink className="nav" to='/Question'>Q & A</NavLink>
+        <NavLink className="nav" to='/projectInfo'>프로젝트 소개</NavLink>
+        <NavLink className="nav" to='/board'>리액트 게시판</NavLink>
+        <NavLink className="nav" to='/studyList'>Study리스트</NavLink>
+        <NavLink className="nav" to='/question'>Q & A</NavLink>
       </Nav>
     </HeaderTag>
   );

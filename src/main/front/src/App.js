@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter,Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import "./css/common.css";
 import "./css/app.css";
@@ -32,10 +32,10 @@ function App() {
         <Content>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/ProjectInfo" element={<ProjectInfo />} />
-            <Route path="/Board" element={<Board />} />
-            <Route path="/StudyList" element={<StudyList />} />
-            <Route path="/Question" element={<Question />} />
+            <Route path="/projectInfo" element={<ProjectInfo />} />
+            <Route path="/board/*" element={<Board />} />
+            <Route path="/studyList" element={<StudyList />} />
+            <Route path="/question" element={<Question />} />
           </Routes>
         </Content>
         <Footer />

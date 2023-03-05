@@ -51,7 +51,7 @@ const BoardWriteButton = styled.button`
   }
 `;
 
-function BoardLIst() {
+function BoardList() {
 
     const [data, setData] = useState([]);
 
@@ -98,14 +98,14 @@ function BoardLIst() {
           }  
           </tbody>
         </Table>
-        <Link>
-        <div className='w90p tar mt30'>
-          <BoardWriteButton>게시글 작성</BoardWriteButton>
-        </div>  
+        <Link to='/board/boardWrite'>
+          <div className='w90p tar mt30'>
+            <BoardWriteButton>게시글 작성</BoardWriteButton>
+          </div>  
         </Link>
       </Main>
     </>
   ) 
 }
 
-export default BoardLIst
+export default BoardList
