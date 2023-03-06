@@ -78,3 +78,12 @@
 .tac{
     text-align: center;
 }
+
+.link{
+    color: white;
+    text-decoration: underline;
+}
+
+.link:hover{
+    color: #0d4e6b;
+}

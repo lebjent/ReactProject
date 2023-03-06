@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
-					
+
+	<!-- 게시글 리스트 불러오기(페이징 처리 전) -->				
 	<select id="getBoardList" resultType="boardDTO">
 		SELECT 
 			BNO,
@@ -13,10 +14,18 @@
 		FROM BOARD_TBL
 	</select>
 	
+	<!-- 게시글 작성 -->
 	<insert id="writeBoard" parameterType="boardDTO">
 		INSERT INTO BOARD_TBL
 		(BNO,TITLE,WRITER,CONTENT,REGDATE)
 		VALUES (BNO_SEQ.NEXTVAL,#{title},#{writer},#{content},SYSDATE)
 	</insert>
+
+	<!-- 게시글 상세보기 -->
+	<select id="getBoardDetail" parameterType="int" resultType="boardDTO">
+		SELECT * FROM
+		BOARD_TBL
+		WHERE BNO = #{bno}
+	</select>
 
 </mapper>

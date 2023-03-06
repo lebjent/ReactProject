@@ -83,7 +83,11 @@ function BoardList() {
               data && data.map((board,index)=>{
                   return <Tr key={index}>
                             <Td>{board.bno}</Td>
-                            <Td>{board.title}</Td>
+                              <Td>
+                              <Link to={`/board/getBoardDetail/${board.bno}`}>  
+                                <span className='link'>{board.title}</span>
+                              </Link>  
+                              </Td>
                             <Td>{board.writer}</Td>
                             <Td>{board.view_cnt}</Td>
                             <Td>{board.like_cnt}</Td>

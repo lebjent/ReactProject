@@ -29,7 +29,7 @@ function Header() {
     <HeaderTag>
       <div className="w30p">
         <Link to='/'>
-        <img src='image/icon/logo.png' alt='logo' width='200'/>
+        <img src='/image/icon/logo.png' alt='logo' width='200'/>
         </Link>
       </div>
       <Nav>

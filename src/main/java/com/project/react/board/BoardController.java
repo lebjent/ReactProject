@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ public class BoardController {
 		
 	}
 	
-	@PostMapping("/writeBoard")
+	@PostMapping(value = "/writeBoard")
     public ResponseEntity<String> writeBoard(@RequestBody BoardDTO boardDTO) {
         try {
             service.writeBoard(boardDTO);
@@ -43,4 +44,18 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 등록에 실패했습니다.");
         }
     }
+
+	@GetMapping(value = "/getBoardDetail/{bno}")
+	public BoardDTO getBoardDetail(@PathVariable int bno) {
+
+		BoardDTO dto = new BoardDTO();
+		try{
+			dto = service.getBoardDetail(bno);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+        return dto;
+    }
+
 }

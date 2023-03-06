@@ -26,4 +26,12 @@ public class BoardDAOImpl implements BoardDAO {
 		sql.insert("boardMapper.writeBoard",dto);
 
 	}
+
+	@Override
+	public BoardDTO getBoardDetail(int bno) throws Exception{
+
+		return sql.selectOne("boardMapper.getBoardDetail",bno);
+
+	}
+
 }

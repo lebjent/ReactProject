@@ -23,4 +23,12 @@ public class BoardServiceImpl implements BoardService{
 		dao.writeBoard(dto);
 
 	}
+
+	@Override
+	public BoardDTO getBoardDetail(int bno) throws Exception{
+
+		return dao.getBoardDetail(bno);
+
+	}
+
 }
