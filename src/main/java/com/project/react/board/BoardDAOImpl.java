@@ -20,4 +20,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return sql.selectList("boardMapper.getBoardList");
 	}
 
+	@Override
+	public void writeBoard(BoardDTO dto) throws Exception{
+
+		sql.insert("boardMapper.writeBoard",dto);
+
+	}
 }

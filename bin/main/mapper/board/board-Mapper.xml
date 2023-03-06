@@ -13,4 +13,10 @@
 		FROM BOARD_TBL
 	</select>
 	
+	<insert id="writeBoard" parameterType="boardDTO">
+		INSERT INTO BOARD_TBL
+		(BNO,TITLE,WRITER,CONTENT,REGDATE)
+		VALUES (BNO_SEQ.NEXTVAL,#{title},#{writer},#{content},SYSDATE)
+	</insert>
+
 </mapper>
