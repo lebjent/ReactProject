@@ -15,3 +15,5 @@ npm install http-proxy-middleware --save
 npm install axios --save
 <br>
 npm install react-ace ace-builds --save
+<br>
+npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
