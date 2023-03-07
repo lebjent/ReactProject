@@ -1,29 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import axios from 'axios';
+import parse from 'html-react-parser'
 import "../css/common.css";
+import "../css/boardDetail.css";
 
-const Main = styled.div`
-  margin: 0 auto;
-  text-align: center;
-`;
-
-const Title = styled.h2`
-  margin-top: 50px;
-  color: #4e5e47;
-`;
-
-const Content = styled.div`
-  margin: 0 auto;
-  width: 80%;
-  border: 3px #8c8377 solid;
-  border-collapse: collapse;
-  background-color: #002227;
-  color: white;
-  padding: 20px;
-  margin-bottom: 50px;
-`;
 
 function BoardDetail() {
 
@@ -37,18 +18,17 @@ function BoardDetail() {
     }, [bno]);
   
     return (
-        <Main>
-            <Title>게시글 상세보기</Title>
-            <Content>
-                <p>{data.bno}</p>
-                <p>{data.title}</p>
-                <p>{data.writer}</p>
-                <p>{data.view_cnt}</p>
-                <p>{data.like_cnt}</p>
-                <p>{data.content}</p>
-                <p>{data.regdate}</p>
-            </Content>
-        </Main>
+      <div className="board-detail">
+        <h2 className="board-detail-title">게시판 상세보기</h2>
+        <div className='board-detail-box1'>
+          <label className='board-detail-label'>게시글 제목</label>
+          <div className='board-detail-input'>{data.title}</div>
+        </div>
+        <div className='board-detail-box1'>
+          <label className='board-detail-label'>게시글 내용</label>
+          <div className='board-detail-content'>{parse(String(data.content))}</div>
+        </div>
+      </div>
     )
 }
 

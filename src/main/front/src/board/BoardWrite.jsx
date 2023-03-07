@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import * as common from '../js/common/common';
 import '../css/boardWrite.css';
 import BasicTextInput from '../ui/BasicTextInput';
-import BasicTextArea from '../ui/BasicTextArea';
 import CustomModal from '../modal/CustomModal';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import TextEditor from '../ui/TextEditor';
 
 function BoardWrite() {
   //게시글 제목
@@ -16,8 +16,8 @@ function BoardWrite() {
 
   //게시글 내용
   const [content, setContent] = useState('');
-  const handleChangeContent = (event) => {
-    setContent(event.target.value);
+  const handleChangeContent = (content) => {
+    setContent(content);
   };
 
   //게시글 작성자
@@ -116,12 +116,9 @@ function BoardWrite() {
         </div>
         <div className="board-write-row">
           <div className="board-write-label">내용</div>
-          <BasicTextArea
-            className="board-write-input"
-            value={content}
-            height={400}
-            onChange={handleChangeContent}
-          />
+          <div className="board-write-input">
+            <TextEditor handleChangeContent={handleChangeContent} />
+          </div>
         </div>
       </div>
       <div className="board-write-footer">
