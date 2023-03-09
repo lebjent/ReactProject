@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import reactlogo from '../image/home/React.jpg'
 import "../css/common.css";
 
 const FirstTag = styled.div`
@@ -32,7 +33,7 @@ function FirstTitle() {
             </FirstContent>
         </div>
         <div className='w40p tac'>
-            <img src="image/home/react.jpg" alt="react" className='w80p' />
+            <img src={reactlogo} alt="react" className='w80p' />
         </div>
     </FirstTag>
   )

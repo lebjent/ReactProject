@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import mainlogo from '../image/icon/logo.png'
 import { Link } from 'react-router-dom';
 
 const HeaderTag = styled.div`
@@ -29,7 +30,7 @@ function Header() {
     <HeaderTag>
       <div className="w30p">
         <Link to='/'>
-        <img src='/image/icon/logo.png' alt='logo' width='200'/>
+        <img src={mainlogo} alt='logo' width='200'/>
         </Link>
       </div>
       <Nav>

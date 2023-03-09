@@ -84,7 +84,7 @@ function BoardList() {
                   return <Tr key={index}>
                             <Td>{board.bno}</Td>
                               <Td>
-                              <Link to={`/board/getBoardDetail/${board.bno}`}>  
+                              <Link to={`/board/boardDetail/${board.bno}`}>  
                                 <span className='link'>{board.title}</span>
                               </Link>  
                               </Td>

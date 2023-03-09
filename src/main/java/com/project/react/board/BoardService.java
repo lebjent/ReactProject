@@ -11,4 +11,7 @@ public interface BoardService {
 
 	//게시판 상세보기
 	public BoardDTO getBoardDetail(int bno) throws Exception;
+
+	//게시판 삭제하기
+	public void deleteBoard(int bno) throws Exception;
 }

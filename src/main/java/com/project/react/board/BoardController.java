@@ -2,6 +2,7 @@ package com.project.react.board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,19 @@ public class BoardController {
 		}
 
         return dto;
+    }
+
+	@PostMapping(value = "/deleteBoard")
+    public ResponseEntity<String> deleteBoard(@RequestBody Map<String, Object> data) {
+        
+		int bno = Integer.parseInt(data.get("bno").toString());
+
+		try {
+            service.deleteBoard(bno);
+            return ResponseEntity.ok().body("게시글이 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 등록에 실패했습니다.");
+        }
     }
 
 }

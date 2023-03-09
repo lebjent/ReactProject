@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CodeEditor from './CodeEditor';
+import CodeEditor from '../ui/CodeEditor';
 
 const SecondTag = styled.div`
     display: flex;

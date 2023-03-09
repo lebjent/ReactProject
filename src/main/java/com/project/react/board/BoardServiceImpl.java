@@ -26,9 +26,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardDTO getBoardDetail(int bno) throws Exception{
-
+		dao.viewCntUpdate(bno);
 		return dao.getBoardDetail(bno);
-
 	}
 
+	@Override
+	public void deleteBoard(int bno) throws Exception{
+		dao.deleteBoard(bno);
+	}
 }

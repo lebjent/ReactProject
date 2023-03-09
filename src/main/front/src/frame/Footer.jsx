@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
+import youtube from '../image/icon/youtube.png'
+import instagram from '../image/icon/instagram.png'
+import kakaotalk from '../image/icon/kakaotalk.png'
 import "../css/footer.css";
 import "../css/common.css";
 
@@ -42,9 +45,9 @@ function Footer(props) {
         </div>
         <div className='footerDiv2'>
           <div>
-            <img className='mr10' src="image/icon/instagram.png" alt="instagram" width="40"height="40" />
-            <img className='mr10' src="image/icon/youtube.png" alt="youtube" width="40"height="40" />
-            <img src="image/icon/kakaotalk.png" alt="kakaotalk" width="40"height="40" />
+            <img className='mr10' src={instagram} alt="instagram" width="40"height="40" />
+            <img className='mr10' src={youtube} alt="youtube" width="40"height="40" />
+            <img src={kakaotalk} alt="kakaotalk" width="40"height="40" />
           </div>
           <p className='colorGrey'>Copyright 2023. JJP All pictures cannot be copied without permission.</p>
         </div>

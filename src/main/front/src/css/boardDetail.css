@@ -32,8 +32,15 @@
     margin-top: 10px;
   }
 
+  .board-detail-box2{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+
   .board-detail-content{
-    width: 100%;
     padding: 20px;
     font-size: 1rem;
     font-weight: 400;
@@ -48,7 +55,6 @@
   }
 
   .board-detail-input{
-    width: 100%;
     padding: 0.75rem 1rem;
     font-size: 1rem;
     font-weight: 400;
@@ -59,4 +65,15 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+
+  /* 버튼 div태그 */
+
+  .button-group{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    text-align: right;
   }

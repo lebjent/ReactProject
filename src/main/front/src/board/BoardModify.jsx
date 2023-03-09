@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useParams,useNavigate, Link } from 'react-router-dom';
+import { useParams,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 /* import parse from 'html-react-parser' */
 import "../css/common.css";
 import "../css/boardDetail.css";
 import BasicButton from '../ui/BasicButton';
 import ConfirmModal from '../modal/ConfirmModal';
-import DetailEditor from '../ui/DetailEditor';
+import ModifyEditor from '../ui/ModifyEditor';
 
 
-function BoardDetail() {
-
+function BoardModify() {
     const navigate = useNavigate();
 
     const [data, setData] = useState({});
     const { bno } = useParams();
 
     const [showModal, setShowModal] = useState(false);
+    
 
     const deleteBoard = () => {
       axios
@@ -30,7 +30,7 @@ function BoardDetail() {
       })
     } 
 
-    //게시글 상세보기 불러오기
+    //게시글 상세정보 불러오기
     useEffect(() => {
         axios.get('/react/getBoardDetail/' + bno)
         .then(response => setData(response.data))
@@ -39,7 +39,7 @@ function BoardDetail() {
   
     return (
       <div className="board-detail">
-        <h2 className="board-detail-title">게시판 상세보기</h2>
+        <h2 className="board-detail-title">게시판 수정하기</h2>
         <div className='mt100'>
           <div className='board-detail-box2'>
             <div className='w50p'>
@@ -67,19 +67,15 @@ function BoardDetail() {
           </div>
           <div className='board-detail-box1'>
             <label className='board-detail-label'>게시글 내용</label>
-            {/* <div className='board-detail-content'>{parse(String(data.content))}</div> */}
-            <DetailEditor value={data.content} />
+            <ModifyEditor value={data.content} />
           </div>
         </div>
         <div className='button-group'>
-          <Link to={`/board/boardModify/${data.bno}`}>
-            <BasicButton value={'수정'} bgColor={'success'}/>
-          </Link>
-          <BasicButton value={'삭제'} onClick={() => setShowModal(true)} bgColor={'danger'}/>
+          <BasicButton value={'수정'} onClick={() => setShowModal(true)} bgColor={'success'}/>
         </div>
         {showModal && (
         <ConfirmModal
-          msg={'게시물을 삭제 하시겠습니까?'}
+          msg={'게시물을 수정 하시겠습니까?'}
           isOpen={showModal}
           onConfirm={() => {
             deleteBoard();
@@ -92,4 +88,4 @@ function BoardDetail() {
     )
 }
 
-export default BoardDetail;
+export default BoardModify

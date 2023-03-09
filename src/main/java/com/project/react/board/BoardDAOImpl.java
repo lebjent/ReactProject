@@ -34,4 +34,16 @@ public class BoardDAOImpl implements BoardDAO {
 
 	}
 
+	@Override
+	public void viewCntUpdate(int bno) throws Exception{
+
+		sql.update("boardMapper.viewCntUpdate",bno);
+
+	}
+
+	@Override
+	public void deleteBoard(int bno)throws Exception{
+		sql.delete("boardMapper.deleteBoard",bno);
+	}
+
 }
