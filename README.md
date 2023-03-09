@@ -19,3 +19,5 @@ npm install react-ace ace-builds --save
 npm install --save @ckeditor/ckeditor5-react @ckeditor/ckeditor5-build-classic
 <br>
 npm i html-react-parser
+<br>
+npm install --save @ckeditor/ckeditor5-basic-styles
