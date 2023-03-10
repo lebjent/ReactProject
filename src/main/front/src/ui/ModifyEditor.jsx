@@ -4,8 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 function ModifyEditor(props) {
 
-/*   const { handleChangeContent,value } = props; */
-    const {value} = props;
+    const { handleChangeContent,value } = props;
   return (
       <>
         <CKEditor
@@ -13,11 +12,11 @@ function ModifyEditor(props) {
             data={value}
             onReady={ editor => {
                 console.log( 'Editor is ready to use!', editor );
-            } }
-/*             onChange={ ( event, editor ) => {
+            } }             
+            onChange={ ( event, editor ) => {
                 const data = editor.getData();
                 handleChangeContent(data);
-            } } */
+            } } 
 
         />
      </>

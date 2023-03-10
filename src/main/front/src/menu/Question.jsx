@@ -1,8 +1,12 @@
 import React from 'react'
 
 function Question() {
+
+
   return (
-    <div>Question</div>
+    <div className="question-answer">
+
+    </div>
   )
 }
 

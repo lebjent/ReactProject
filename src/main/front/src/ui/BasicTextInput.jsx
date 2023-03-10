@@ -21,8 +21,10 @@ const BasicTextInputTag = styled.input`
     작 성 일 : 2023-03-06
 */
 function BasicTextInput(props) {
-  const { width, type, align, value, onChange } = props;
-  return <BasicTextInputTag type={type} align={align} onChange={onChange} width={width} value={value} />;
+ 
+  const { width, type, align, defaultValue, readOnly, onChange } = props;
+  
+  return <BasicTextInputTag type={type} readOnly={readOnly}  align={align} onChange={onChange} width={width} defaultValue={defaultValue} />;
 }
 
 export default BasicTextInput;

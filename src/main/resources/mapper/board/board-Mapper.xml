@@ -42,4 +42,11 @@
 		WHERE BNO = #{bno}
 	</delete>
 
+	<!-- 게시물 수정하기 -->
+	<update id="updateBoard" parameterType="boardDTO">
+		UPDATE BOARD_TBL
+		SET WRITER=#{writer}, TITLE = #{title}, CONTENT = #{content}
+		WHERE BNO = #{bno}
+	</update>
+
 </mapper>

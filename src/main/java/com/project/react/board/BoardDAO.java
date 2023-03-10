@@ -18,4 +18,7 @@ public interface BoardDAO {
 
 	//게시판 삭제
 	public void deleteBoard(int bno) throws Exception;
+
+	//게시판 업데이트
+	public void updateBoard(BoardDTO dto)throws Exception;
 }

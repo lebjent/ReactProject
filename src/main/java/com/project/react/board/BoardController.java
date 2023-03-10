@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,8 +69,19 @@ public class BoardController {
             service.deleteBoard(bno);
             return ResponseEntity.ok().body("게시글이 삭제되었습니다.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 등록에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
         }
     }
 
+	@PostMapping(value="/updateBoard")
+	public ResponseEntity<String> updateBoard(@RequestBody BoardDTO dto) {
+		
+		try{
+			service.updateBoard(dto);
+			return ResponseEntity.ok().body("게시글이 수정되었습니다.");
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 수정에 실패했습니다.");
+		}
+
+	}
 }

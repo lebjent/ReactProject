@@ -14,4 +14,7 @@ public interface BoardService {
 
 	//게시판 삭제하기
 	public void deleteBoard(int bno) throws Exception;
+
+	//게시판 수정하기
+	public void updateBoard(BoardDTO dto) throws Exception;
 }
