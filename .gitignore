@@ -40,9 +40,4 @@ bower_components
 psd
 thumb
 sketch
-
-
-.settings
-.vscode
-.gradle
 # End of https://www.toptal.com/developers/gitignore/api/java,react
