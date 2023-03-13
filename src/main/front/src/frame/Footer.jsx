@@ -3,6 +3,7 @@ import styled from "styled-components";
 import youtube from '../image/icon/youtube.png'
 import instagram from '../image/icon/instagram.png'
 import kakaotalk from '../image/icon/kakaotalk.png'
+import reactmini from '../image/icon/react.png'
 import "../css/footer.css";
 import "../css/common.css";
 
@@ -40,7 +41,7 @@ function Footer(props) {
       </Liner>  
       <FooterTag>
         <div className='footerDiv1'>
-          <img className='div1Img' src="image/icon/react.png" alt="react" width="80"height="80" />
+          <img className='div1Img' src={reactmini} alt="react" width="80"height="80" />
           <span className='div1Font'>React 연습 프로젝트</span>
         </div>
         <div className='footerDiv2'>
