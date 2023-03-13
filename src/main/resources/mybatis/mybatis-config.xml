@@ -13,7 +13,9 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="com.project.react.board.BoardDTO" alias="boardDTO"/>
+		<typeAlias type="com.project.react.board.BoardDTO" alias="BoardDTO"/>
+		<typeAlias type="com.project.react.common.page.SearchCriteria" alias="SearchCri"/>
+
 	</typeAliases> 
 	
 	

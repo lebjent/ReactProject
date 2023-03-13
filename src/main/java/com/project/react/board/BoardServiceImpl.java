@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.react.common.page.SearchCriteria;
+
 @Service
 public class BoardServiceImpl implements BoardService{
 	
@@ -12,11 +14,17 @@ public class BoardServiceImpl implements BoardService{
 	private BoardDAO dao;
 
 	@Override
-	public List<BoardDTO> getBoardList() throws Exception {
+	public List<BoardDTO> getBoardList(SearchCriteria scri) throws Exception {
 		
-		return dao.getBoardList();
+		return dao.getBoardList(scri);
 	}
 	
+	@Override
+	public int getBoardCount(SearchCriteria scri) throws Exception {
+		
+		return dao.getBoardCount(scri);
+	}
+
 	@Override
 	public void writeBoard(BoardDTO dto) throws Exception{
 

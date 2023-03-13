@@ -11,7 +11,7 @@ function TextEditor(props) {
       <>
         <CKEditor
             editor={ ClassicEditor }
-            data="<p>Hello React Practice!!</p>"
+            data=""
             onReady={ editor => {
                 console.log( 'Editor is ready to use!', editor );
             } }
@@ -19,7 +19,9 @@ function TextEditor(props) {
                 const data = editor.getData();
                 handleChangeContent(data);
             } }
-
+            config={{
+                placeholder: '내용을 입력하세요.'
+            }}
         />
      </>
   )

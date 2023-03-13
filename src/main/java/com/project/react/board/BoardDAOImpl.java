@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.react.common.page.SearchCriteria;
+
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 	
@@ -14,10 +16,16 @@ public class BoardDAOImpl implements BoardDAO {
 
 	
 	@Override
-	public List<BoardDTO> getBoardList() throws Exception {
+	public List<BoardDTO> getBoardList(SearchCriteria scri) throws Exception {
 		
 		
-		return sql.selectList("boardMapper.getBoardList");
+		return sql.selectList("boardMapper.getBoardList",scri);
+	}
+
+	@Override
+	public int getBoardCount(SearchCriteria scri) throws Exception{
+
+		return sql.selectOne("boardMapper.getBoardCount",scri);
 	}
 
 	@Override

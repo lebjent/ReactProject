@@ -11,7 +11,7 @@
     font-weight: 500;
   }
   
-  .pagination li a {
+  .pagination li span {
     color: #555;
     display: inline-block;
     padding: 5px 10px;
@@ -20,12 +20,12 @@
     transition: all .2s ease-in-out;
   }
   
-  .pagination li.active a {
+  .pagination li.active span {
     background-color: #005bb5;
     color: white;
     border-color: #005bb5;
   }
   
-  .pagination li a:hover {
+  .pagination li span:hover {
     background-color: #f6f6f6;
   }

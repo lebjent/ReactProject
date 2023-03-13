@@ -93,14 +93,14 @@ function BoardWrite() {
           <BasicTextInput
             className="board-write-input"
             type="text"
-            value={writer}
+            defaultValue={writer}
             onChange={handleChangeWriter}
           />
           <div className="board-write-label">작성일</div>
           <BasicTextInput
             className="board-write-input"
             type="text"
-            value={date}
+            defaultValue={date}
             onChange={handleChangeDate}
           />
         </div>
@@ -110,7 +110,7 @@ function BoardWrite() {
             className="board-write-input"
             type="text"
             align="left"
-            value={title}
+            defaultValue={title}
             onChange={handleChangeTitle}
           />
         </div>

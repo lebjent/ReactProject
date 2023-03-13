@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import ReactPaginate from 'react-paginate';
+import queryString from "query-string";
 import "../css/common.css";
-import "../css/reactPage.css";
+import Pagenation from '../page/Pagenation';
+import BasicSelectBox from '../ui/BasicSelectBox';
+import BasicTextInput from '../ui/BasicTextInput';
 
 
 const Main = styled.div`
@@ -56,52 +58,73 @@ const BoardWriteButton = styled.button`
 
 function BoardList() {
 
-    const [data, setData] = useState([]);//게시판 리스트 실제 데이터를 담을 state
-    const [offset, setOffset] = useState(0);  // 데이터 배열의 시작 인덱스
-    const [perPage] = useState(10);  // 페이지당 보여줄 게시글 수
-    const [pageCount, setPageCount] = useState(0);  // 전체 페이지 수
+    const [boardList, setBoardList] = useState([]);//게시판 리스트 실제 데이터를 담을 state
+    const [pageMaker, setPageMaker] = useState({});//백엔드에서 페이징 처리한 정보
+    const [currentPage, setCurrentPage] = useState(1);//현재 페이지
+
+    const [searchType,setSearchType] = useState('ALL');
+    const [keyword,setKeyword] = useState('');
+
+    const searchTypeOpt = [   { value: 'ALL', label: '전체' },
+                              { value: 'W', label: '작성자' },
+                              { value: 'T', label: '제목' },
+                              { value: 'C', label: '내용' }
+    ]
 
     useEffect(() => {
-      axios.get('/react/getBoardList')
-          .then(response => {
-              setData(response.data);
-              setPageCount(Math.ceil(response.data.length / perPage));  // 전체 페이지 수 계산
-          })
-          .catch(error => console.log(error))
-    }, [perPage]);
 
-    const handlePageClick = (e) => {
-      const selectedPage = e.selected;  // 선택된 페이지
-      setOffset(selectedPage * perPage);  // 데이터 배열의 시작 인덱스 계산
-    };
-    
-    const postData = data.length === 0 ? (
+      const query = queryString.stringify({
+        page: currentPage,
+        perPageNum: 10,
+        searchType:searchType,
+        keyword: keyword
+      });
+
+      axios.get(`/react/getBoardList?${query}`)
+      .then(response => {
+        const { board, pageMaker } = response.data;
+        setBoardList(board);
+        setPageMaker(pageMaker);
+      })
+      .catch(error => console.log(error))
+
+    }, [currentPage,keyword,searchType]);
+
+    const handlePageChange = (page) => { setCurrentPage(page);};
+    const handleSearchType = (event) =>{ setSearchType(event.target.value);}
+    const handleKeyWord = (event) =>{setKeyword(event.target.value);}
+
+    const postData = boardList.length === 0 ? (
       <Tr>
         <Td colSpan={6} rowSpan={6}>데이터가 없습니다.</Td>
       </Tr>
     ) : (
-      data.slice(offset, offset + perPage).map((board, index) => {
-        return (
-            <Tr key={index}>
-                <Td>{board.bno}</Td>
-                <Td>
-                    <Link to={`/board/boardDetail/${board.bno}`}>
-                        <span className='link'>{board.title}</span>
-                    </Link>
-                </Td>
-                <Td>{board.writer}</Td>
-                <Td>{board.view_cnt}</Td>
-                <Td>{board.like_cnt}</Td>
-                <Td>{board.regdate}</Td>
-            </Tr>
-        )
-      })
+        boardList.map((board) => (
+          <Tr key={board.bno}>
+            <Td>{board.bno}</Td>
+            <Td>
+              <Link to={`/board/boardDetail/${board.bno}`}>
+                  <span className='link'>{board.title}</span>
+              </Link>
+            </Td>
+            <Td>{board.writer}</Td>
+            <Td>{board.view_cnt}</Td>
+            <Td>{board.like_cnt}</Td>
+            <Td>{board.regdate}</Td>
+          </Tr>
+        ))
     );
 
   return (
     <>
       <Main>
         <h2 className='colorGrey'>React게시판</h2>
+        <div className='tar w90p'>
+          <div className='mb30'>
+            <BasicSelectBox options={searchTypeOpt} width={80} defaultValue={searchType} onChange={handleSearchType} />
+            <BasicTextInput type={'text'} width={300} defaultValue={keyword} onChange={handleKeyWord} />
+          </div>
+        </div>
         <Table>
           <thead>
           <Tr>
@@ -117,17 +140,10 @@ function BoardList() {
             {postData}
           </tbody>
         </Table>
-        <ReactPaginate
-          previousLabel={'이전'}
-          nextLabel={'다음'}
-          breakLabel={'...'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
+        <Pagenation
+          currentPage={currentPage}
+          pageMaker={pageMaker}
+          onPageChange={handlePageChange}
         />
         <Link to='/board/boardWrite'>
           <div className='w90p tar mt30'>

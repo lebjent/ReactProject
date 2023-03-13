@@ -1,7 +1,6 @@
 package com.project.react.board;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.react.common.page.SearchCriteria;
+import com.project.react.common.page.PageMaker;
+
 @RestController
 @RequestMapping(value = "/react")
 public class BoardController {
@@ -22,18 +24,25 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping(value = "/getBoardList")
-	public List<BoardDTO> getBoardList()throws Exception{
-		
-		List<BoardDTO> boardList = new ArrayList<>();
-		
+	public ResponseEntity<Map<String,Object>> getBoardList(SearchCriteria scri) {
+		Map<String,Object> boardObject = new HashMap<>();//최종적으로 프론트엔드에 던져질 Map객체
+		System.out.println(scri.toString());
+		System.out.println(scri.toString());
+		System.out.println(scri.toString());
+		System.out.println(scri.toString());
+		System.out.println(scri.toString());
+		System.out.println(scri.toString());
 		try {
-			boardList = service.getBoardList();
+			boardObject.put("board", service.getBoardList(scri));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(scri);
+			pageMaker.setTotalCount(service.getBoardCount(scri));
+			boardObject.put("pageMaker", pageMaker);
+			return ResponseEntity.ok().body(boardObject);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
-		
-		return boardList;
-		
 	}
 	
 	@PostMapping(value = "/writeBoard")

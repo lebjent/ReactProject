@@ -3,26 +3,65 @@
 <mapper namespace="boardMapper">
 
 	<!-- 게시글 리스트 불러오기 -->				
-	<select id="getBoardList" resultType="boardDTO">
-		SELECT 
-			BNO,
-			TITLE,
-			WRITER,
-			VIEW_CNT,
-			LIKE_CNT,
-			TO_CHAR(REGDATE,'YYYY-MM-DD') AS REGDATE
-		FROM BOARD_TBL
+	<select id="getBoardList" resultType="BoardDTO" parameterType="SearchCri">
+		SELECT BNO,
+               WRITER,
+               TITLE,
+               VIEW_CNT,
+               LIKE_CNT,
+               REGDATE
+        FROM
+            (SELECT 
+                   BNO,
+                   WRITER,
+                   TITLE,
+                   VIEW_CNT,
+                   LIKE_CNT,
+                   REGDATE,
+                   ROW_NUMBER() OVER(ORDER BY BNO DESC) AS RNUM
+                   FROM BOARD_TBL
+				   WHERE 1=1
+				   <if test="keyword != '' and keyword != null">
+				   	<include refid="search"></include>
+				   </if>
+                        )BOARD_ROW
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 	</select>
 	
+	<!-- 게시글 총 카운트 -->
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD_TBL
+		WHERE 1=1
+		<if test="keyword != '' and keyword != null">
+			<include refid="search"></include>
+		</if>
+	</select>
+
+	<!-- 상품리스트 검색기능 sql태그 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'ALL'.toString()">
+				AND WRITER LIKE '%' || #{keyword} || '%'
+				OR TITLE LIKE '%' || #{keyword} || '%'
+				OR CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'W'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+
+
 	<!-- 게시글 작성 -->
-	<insert id="writeBoard" parameterType="boardDTO">
+	<insert id="writeBoard" parameterType="BoardDTO">
 		INSERT INTO BOARD_TBL
 		(BNO,TITLE,WRITER,CONTENT,REGDATE)
 		VALUES (BNO_SEQ.NEXTVAL,#{title},#{writer},#{content},SYSDATE)
 	</insert>
 
 	<!-- 게시글 상세보기 -->
-	<select id="getBoardDetail" parameterType="int" resultType="boardDTO">
+	<select id="getBoardDetail" parameterType="int" resultType="BoardDTO">
 		SELECT * FROM
 		BOARD_TBL
 		WHERE BNO = #{bno}
@@ -43,7 +82,7 @@
 	</delete>
 
 	<!-- 게시물 수정하기 -->
-	<update id="updateBoard" parameterType="boardDTO">
+	<update id="updateBoard" parameterType="BoardDTO">
 		UPDATE BOARD_TBL
 		SET WRITER=#{writer}, TITLE = #{title}, CONTENT = #{content}
 		WHERE BNO = #{bno}
