@@ -101,7 +101,7 @@ function BoardList() {
             )
           }  
           </tbody>
-        </Table>
+        </Table>zz
         <Link to='/board/boardWrite'>
           <div className='w90p tar mt30'>
             <BoardWriteButton>게시글 작성</BoardWriteButton>
