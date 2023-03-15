@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import '../css/common.css'
 import CustomModal from '../modal/CustomModal';
@@ -18,19 +18,18 @@ const ChalkboardWrapper = styled.div`
 `;
 
 const MemoDiv = styled.div`
-    margin-top: 50px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    > div {
-      width: 23%;
-      height: 300px;
-      margin-bottom: 30px;
-      margin-left: 55px;
-      margin-right: 55px;
-    }
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  > div {
+    width: 28%;
+    height: 350px;
+    margin-bottom: 30px;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 `;
-
 
 function StudyList() {
 
@@ -44,13 +43,14 @@ function StudyList() {
   const closeModal = () => {setModalIsOpen(false);};
   const [msg,setMsg] = useState("");
 
-  //게시글 작성관련
+  //메모 작성관련
   const [mtitle,setMTitle] = useState('');
   const [mcontent,setMContent]=useState('');
 
   const handleChangeTitle = (event) =>{setMTitle(event.target.value);}
   const handleChangeContent = (event) =>{setMContent(event.target.value);}
 
+  //메모작성시
   const listWrite=()=>{
 
       if(mtitle === ''){
@@ -64,17 +64,46 @@ function StudyList() {
         setModalIsOpen(true);
         return false;
       }
-      console.log(mtitle);
       axios.post('/react/insertMemo', {
-        mtitle,
-        mcontent
+        mtitle:mtitle,
+        mcontent:mcontent
       })
       .then(response => {
         setIsOpen(false);
+        axios.get('/react/getMemoList').then((response) => {
+          setMemoList(response.data);
+        });
       })
       .catch(error => console.log(error))
 
   }
+
+  //메모삭제시
+  const memoDelete = (mno)=>{
+    axios.post('/react/memoDelete', {
+      mno:mno
+    })
+    .then(response => {
+      setMsg('메모를 삭제 하였습니다.');
+      setModalIsOpen(true);
+      axios.get('/react/getMemoList').then((response) => {
+        setMemoList(response.data);
+      });
+    })
+    .catch(error => console.log(error))  
+  }
+
+  const[memoList,setMemoList] = useState([]);
+  //메모 리스트
+  useEffect(() => {
+
+    axios.get('/react/getMemoList')
+    .then(response => {
+      setMemoList(response.data);
+    })
+    .catch(error => console.log(error))
+
+  }, []);
 
   return (
     <div>
@@ -83,18 +112,11 @@ function StudyList() {
             <h1>Welcome to the StudyBoard!</h1>
             <p>공부할 기술Stack을 기록해 보세요.</p>
             <MemoDiv>
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
-              <Memo title={'제목'} date={'2022-05-05'} content={'내용이 없습니다.'} />
+              {
+                memoList.map((memo) =>{
+                  return <Memo key={memo.mno} onClick={()=>memoDelete(memo.mno)} title={memo.mtitle} date={memo.regdate} content={memo.mcontent} />
+                })
+              }
             </MemoDiv>
           </ChalkboardWrapper>
           <div className='tar mt30'>

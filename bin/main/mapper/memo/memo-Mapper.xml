@@ -9,4 +9,20 @@
         VALUES(MEMO_SEQ.NEXTVAL,#{mtitle},#{mcontent},SYSDATE)
     </insert>
 
+    <!-- 메모장리스트 불러오기 -->
+    <select id="getMemoList" parameterType="MemoDTO" resultType="MemoDTO">
+        SELECT 
+            MNO,
+            MTITLE,
+            MCONTENT,
+            TO_CHAR(REGDATE,'YYYY-MM-DD') AS REGDATE
+        FROM MEMO_TBL
+    </select>
+
+    <!-- 메모 삭제하기 -->
+    <delete id="memoDelete" parameterType="MemoDTO">
+        DELETE FROM MEMO_TBL
+        WHERE MNO = #{mno}
+    </delete>
+
 </mapper>
