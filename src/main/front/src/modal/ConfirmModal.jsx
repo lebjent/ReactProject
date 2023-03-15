@@ -5,7 +5,7 @@ import "../css/customModal.css";
 
 function ConfirmModal(props){
   
-  const { isOpen, onClose, onConfirm,msg } =props;
+  const { isOpen, onClose, onConfirm,msg } = props;
 
   return (
     <Modal

@@ -91,8 +91,8 @@ function BoardList() {
     }, [currentPage,keyword,searchType]);
 
     const handlePageChange = (page) => { setCurrentPage(page);};
-    const handleSearchType = (event) =>{ setSearchType(event.target.value);}
-    const handleKeyWord = (event) =>{setKeyword(event.target.value);}
+    const handleSearchType = (event) =>{ setSearchType(event.target.value);setCurrentPage(1);}
+    const handleKeyWord = (event) =>{setKeyword(event.target.value); setCurrentPage(1);}
 
     const postData = boardList.length === 0 ? (
       <Tr>
@@ -121,7 +121,7 @@ function BoardList() {
         <h2 className='colorGrey'>React게시판</h2>
         <div className='tar w90p'>
           <div className='mb30'>
-            <BasicSelectBox options={searchTypeOpt} width={80} defaultValue={searchType} onChange={handleSearchType} />
+            <BasicSelectBox options={searchTypeOpt} width={100} defaultValue={searchType} onChange={handleSearchType} />
             <BasicTextInput type={'text'} width={300} defaultValue={keyword} onChange={handleKeyWord} />
           </div>
         </div>
