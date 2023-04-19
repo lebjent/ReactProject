@@ -26,12 +26,7 @@ public class BoardController {
 	@GetMapping(value = "/getBoardList")
 	public ResponseEntity<Map<String,Object>> getBoardList(SearchCriteria scri) {
 		Map<String,Object> boardObject = new HashMap<>();//최종적으로 프론트엔드에 던져질 Map객체
-		System.out.println(scri.toString());
-		System.out.println(scri.toString());
-		System.out.println(scri.toString());
-		System.out.println(scri.toString());
-		System.out.println(scri.toString());
-		System.out.println(scri.toString());
+
 		try {
 			boardObject.put("board", service.getBoardList(scri));
 			PageMaker pageMaker = new PageMaker();
