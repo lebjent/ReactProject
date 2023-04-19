@@ -39,6 +39,7 @@ function Header() {
         <NavLink className="nav" to='/board'>리액트 게시판</NavLink>
         <NavLink className="nav" to='/studyList'>Study리스트</NavLink>
         <NavLink className="nav" to='/question'>자주묻는 Q & A</NavLink>
+        <NavLink className="nav" to='/developPage'>개발중인 페이지</NavLink>
       </Nav>
     </HeaderTag>
   );

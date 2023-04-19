@@ -12,6 +12,8 @@ import ProjectInfo from "./menu/ProjectInfo";
 import Board from "./menu/Board";
 import Question from "./menu/Question";
 import StudyList from "./menu/StudyList";
+import DevelopPage from "./menu/Development";
+
 
 const AppWrapper = styled.div`
   display: flex;
@@ -36,6 +38,7 @@ function App() {
             <Route path="/board/*" element={<Board />} />
             <Route path="/studyList" element={<StudyList />} />
             <Route path="/question" element={<Question />} />
+            <Route path="/developPage/*" element={<DevelopPage />} />
           </Routes>
         </Content>
         <Footer />
