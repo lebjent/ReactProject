@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stockMapper">
+
+    <!-- 코인이름 조회 및 현재가격조회 -->
+    <select id="getCoinInfo" parameterType="CoinDTO" resultType="CoinDTO">
+        SELECT COIN_ID,
+               COIN_NAME,
+               MARKET_PRICE,
+               CLOSE_PRICE 
+        FROM COIN_INFO 
+        WHERE COIN_ID = #{coin_id}
+    </select>
+
+    <!-- 코인의 매수 데이터 가져오기 -->
+    <select id="getBuyData" parameterType="PriceDTO" resultType="PriceDTO">
+        SELECT PRICE,QUANTITY,ORDER_TYPE
+        FROM COIN_TRADE
+        WHERE COIN_ID = #{coin_id}
+        ORDER BY PRICE DESC
+    </select> 
+
+</mapper>

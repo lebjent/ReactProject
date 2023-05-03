@@ -100,7 +100,11 @@ function StockWave() {
         setFinalAmount(amount + '주');
         
         const averagePrice = (stock/amount).toFixed(1);
-        setAveragePrice(comma(averagePrice) + '원');
+        if(isNaN(averagePrice)){
+          setAveragePrice('0원');
+        }else{
+          setAveragePrice(comma(averagePrice) + '원');
+        }
       }
 
       sumStock();

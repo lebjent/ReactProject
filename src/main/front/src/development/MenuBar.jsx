@@ -50,6 +50,9 @@ function MenuBar() {
           <MenuLink to="/developPage">포트원 결제페이지</MenuLink>
         </MenuItem>
         <MenuItem>
+          <MenuLink to="/developPage/stock">Stock</MenuLink>
+        </MenuItem>
+        <MenuItem>
           <MenuLink to="/developPage/stockWave">StockWave</MenuLink>
         </MenuItem>
         <MenuItem>
