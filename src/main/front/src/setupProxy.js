@@ -2,10 +2,10 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/react',
+    '/react', // 프록시할 URL 패턴
     createProxyMiddleware({
-      target: 'http://localhost:8085', //스프링 부트에 설정된 포트 번호
-      changeOrigin: true,
+      target: 'http://localhost:8085', // 실제 API 서버 주소
+      changeOrigin: true
     })
   );
 };

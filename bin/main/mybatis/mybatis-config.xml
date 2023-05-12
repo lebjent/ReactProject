@@ -17,8 +17,8 @@
 		<typeAlias type="com.project.react.memo.MemoDTO" alias="MemoDTO"/>
 		<typeAlias type="com.project.react.stock.CoinDTO" alias="CoinDTO"/>
 		<typeAlias type="com.project.react.stock.PriceDTO" alias="PriceDTO"/>
+		<typeAlias type="com.project.react.member.MemberDTO" alias="MemberDTO"/>
 		<typeAlias type="com.project.react.common.page.SearchCriteria" alias="SearchCri"/>
-
 	</typeAliases> 
 	
 	

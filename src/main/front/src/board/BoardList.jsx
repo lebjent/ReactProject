@@ -80,7 +80,11 @@ function BoardList() {
         keyword: keyword
       });
 
-      axios.get(`/react/getBoardList?${query}`)
+      axios.get(`/react/getBoardList?${query}`,{
+        headers: {
+          Accept: 'application/json'
+        }
+      })
       .then(response => {
         const { board, pageMaker } = response.data;
         setBoardList(board);

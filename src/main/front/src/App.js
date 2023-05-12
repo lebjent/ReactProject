@@ -13,6 +13,7 @@ import Board from "./menu/Board";
 import Question from "./menu/Question";
 import StudyList from "./menu/StudyList";
 import DevelopPage from "./menu/Development";
+import MemberJoin from "./menu/MemberJoin";
 
 
 const AppWrapper = styled.div`
@@ -39,6 +40,7 @@ function App() {
             <Route path="/studyList" element={<StudyList />} />
             <Route path="/question" element={<Question />} />
             <Route path="/developPage/*" element={<DevelopPage />} />
+            <Route path="/MemberJoin" element={<MemberJoin />} />
           </Routes>
         </Content>
         <Footer />

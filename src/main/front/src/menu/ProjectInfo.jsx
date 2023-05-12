@@ -20,7 +20,7 @@ function ProjectInfo() {
           지금 이 리액트 프로젝트는 단순히 리액트와 스프링부트를 사용했을때 어떤식으로 이용해야할지 공부를 하기위한 목적입니다.
         </p>
         <Link to={'/board'}>
-          <BasicButton bgColor={'primary'} width={'200px'} value={'게시판 구경하기'} />
+          <BasicButton bgColor={'primary'} width={'200'} value={'게시판 구경하기'} />
         </Link>
       </div>
   )

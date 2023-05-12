@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import BasicButton from '../ui/BasicButton';
 import mainlogo from '../image/icon/logo.png'
 import { Link } from 'react-router-dom';
 
@@ -41,6 +42,9 @@ function Header() {
         <NavLink className="nav" to='/question'>자주묻는 Q & A</NavLink>
         <NavLink className="nav" to='/developPage'>개발중인 페이지</NavLink>
       </Nav>
+      <Link to='/MemberJoin'>
+        <BasicButton value={'JOIN'} bgColor={'success'}/>
+      </Link>
     </HeaderTag>
   );
 }
