@@ -9,4 +9,33 @@
         WHERE ID = #{id}
     </select>
 
+    <!-- 회원가입 -->
+    <insert id="memberJoin" parameterType="memberDTO">
+        INSERT INTO MEMBER_TBL
+            (
+                MNO,
+                ID,
+                PASSWORD,
+                NAME,
+                PHONE,
+                GENDER,
+                JOIN_DATE
+            )
+        VALUES
+            (
+                (SELECT NVL(MAX(MNO),0)+1 AS MNO FROM MEMBER_TBL),
+                #{id},
+                #{password},
+                #{name},
+                #{phone},
+                #{gender},
+                SYSDATE
+            )
+    </insert>
+
+    <!-- 회원정보 가져오기 -->
+    <select id="getMemberInfo" parameterType="string" resultType="MemberDTO">
+        SELECT * FROM MEMBER_TBL WHERE ID = #{is}
+    </select>
+
 </mapper>

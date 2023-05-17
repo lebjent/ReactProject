@@ -104,7 +104,6 @@ const Button = styled.button`
 const EmailInput2 = styled.span`
   display: flex;
   align-items: center;
-  margin-right: 15px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -131,8 +130,11 @@ function MemberJoin() {
   const [id, setId] = useState("");
   const [data, setData] = useState(0);
   const [idDupChk, setIdDupChk] = useState(false);
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordChk,setPasswordChk] = useState(false);
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("");
   const [errors, setErrors] = useState({});
@@ -146,16 +148,63 @@ function MemberJoin() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const errors = {};
-    if (!name) {
-      errors.name = "이름을 입력해주세요.";
+
+    if (name ==='') {
+      setMsg('이름을 입력 해주세요.');
+      setModalIsOpen(true);
+      return false;
     }
 
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-    } else {
-      // 회원가입 로직 실행
+    if(id === ''){
+      setMsg('아이디를 입력해주세요.');
+      setModalIsOpen(true);
+      setIdDupChk(false);
+      return false;
     }
+
+    if(!idDupChk){
+      setMsg('아이디 중복체크를 해주세요.');
+      setModalIsOpen(true);
+      setIdDupChk(false);
+      return false;
+    }
+
+    if(!passwordChk){
+      setMsg('비밀번호를 확인해주세요.');
+      setModalIsOpen(true);
+      return false;
+    }
+
+    if(phoneNumber === ''){
+      setMsg('휴대폰번호를 입력해주세요.');
+      setModalIsOpen(true);
+      return false;
+    }
+
+    if(gender === ''){
+      setMsg('성별을 선택해주세요.');
+      setModalIsOpen(true);
+      return false;
+    }
+
+      //axios를 사용하여 데이터 전송
+      axiosApi
+        .post('/memberJoin', {
+          "name":name,
+          "id":id,
+          "password":password,
+          "phone":phoneNumber,
+          "gender":gender
+        })
+        .then((response) => {
+          console.log('회원가입 성공', response);
+        })
+        .catch((error) => {
+          console.error('회원가입에 실패하였습니다.', error);
+          setMsg('회원가입에 실패하였습니다.');
+          setModalIsOpen(true);
+        });
+
   };
 
   const handleIdDupChk = () =>{
@@ -170,18 +219,32 @@ function MemberJoin() {
     .then(response => setData(response.data))
     .catch(error => console.log(error))
 
-    console.log(data);
+    if(data>0){
+      setMsg('중복된 아이디가 있습니다.');
+      setModalIsOpen(true);
+      setIdDupChk(false);
+      return false;
+    }else{
+      setMsg('사용 가능한 아이디 입니다.');
+      setModalIsOpen(true);
+      setIdDupChk(true);
+      return true;
+    }
 
   }
 
+  /* 아이디 유효성 체크 */
   const handleChangeId = (e) => {
     const id = e.target.value;
     const errors = {};
 
     if (!idPattern.test(id)) {
       setId(id);
-      errors.id = "에러가 발생되었습니다.";
-    } else {
+      errors.id = "아이디는 영문 또는 숫자 또는 영문+숫자 조합으로만 가능합니다.";
+    } else if(id.length >13) {
+      setId(id);
+      errors.id = "아이디는 13자리 이내로 작성해주세요.";
+    }else{
       setId(id);
       errors.id = "";
     }
@@ -191,6 +254,7 @@ function MemberJoin() {
     }
   };
 
+  /* 이름 유효성 체크 */
   const handleChangeName = (e) => {
     const name = e.target.value;
     const errors = {};
@@ -220,10 +284,55 @@ function MemberJoin() {
       errors.password = "";
     }
 
+    if(password === confirmPassword){
+      setPasswordChk(true);
+    }else{
+      setPasswordChk(false);
+    }
+
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     }
   };
+
+  const handleChangeConfirmPassword = (e) =>{
+    
+    const confirmPW = e.target.value;
+    const errors = {};
+
+    setConfirmPassword(confirmPW);
+
+    if(confirmPW === password){
+      setPasswordChk(true);
+      errors.confirmPassword = "";
+    }else{
+      setPasswordChk(false);
+      errors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+    }
+
+  }
+
+  
+  const handleChangePhone = (e)=>{
+    const phoneNumber = e.target.value.replace(/[^0-9]/g,"");
+    setPhoneNumber(phoneNumber);
+    
+    if(phoneNumber.length < 11 || phoneNumber.length > 11){
+      errors.phoneNumber = "휴대전화번호를 정상적으로 입력해주세요.";
+    }else{
+      errors.phoneNumber = "";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+    }
+
+  }
+
 
   return (
     <MainDiv>
@@ -257,16 +366,16 @@ function MemberJoin() {
           <Input
             type="password"
             value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={handleChangeConfirmPassword}
           />
           {errors.confirmPassword && <Error>{errors.confirmPassword}</Error>}
         </FormField>
         <FormField>
-          <Label>전화번호</Label>
+          <Label>휴대전화번호(-생략)</Label>
           <Input
-            type="tel"
+            type="text"
             value={phoneNumber}
-            onChange={(event) => setPhoneNumber(event.target.value)}
+            onChange={handleChangePhone}
           />
           {errors.phoneNumber && <Error>{errors.phoneNumber}</Error>}
         </FormField>
@@ -277,8 +386,8 @@ function MemberJoin() {
             onChange={(event) => setGender(event.target.value)}
           >
             <option value="">성별을 선택해주세요</option>
-            <option value="male">남성</option>
-            <option value="female">여성</option>
+            <option value="M">남성</option>
+            <option value="F">여성</option>
           </Select>
           {errors.gender && <Error>{errors.gender}</Error>}
         </FormField>

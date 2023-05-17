@@ -6,8 +6,9 @@ import lombok.Data;
 public class MemberDTO {
     
     private int mno;
+    private String name;
     private String id;
-    private String pw;
+    private String password;
     private String phone;
     private String gender;
 
