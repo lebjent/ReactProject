@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import CustomModal from '../modal/CustomModal';
+import axiosApi from '../axiosApi';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -64,14 +66,13 @@ const Button = styled.button`
   }
 `;
 
-function OrderForm({basicPrice}) {
-  const [side, setSide] = useState('BUY');
+function OrderForm({basicPrice,coinId,onFunction}) {
+  const [orderType, setOrderType] = useState('BUY');
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(Number(basicPrice));
- 
 
   const handleRadioChange = (e) => {
-    setSide(e.target.value);
+    setOrderType(e.target.value);
   };
 
   const handleQuantityChange = (e) => {
@@ -92,27 +93,64 @@ function OrderForm({basicPrice}) {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Submitted:', { side, quantity, price });
-  };
 
-  const buttonText = side === 'BUY' ? '매수하기' : '매도하기';
-  const buttonColor = side === 'BUY' ? '#db1028' : '#2b8bc9';
+  const buttonText = orderType === 'BUY' ? '매수하기' : '매도하기';
+  const buttonColor = orderType === 'BUY' ? '#db1028' : '#2b8bc9';
+
+    //모달 상태
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const closeModal = () => {
+      setModalIsOpen(false);
+    };
+    const [msg,setMsg] = useState("");
+  
+    const handleOrderClick = (e) =>{
+  
+      e.preventDefault();
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      
+      if(user === null){
+        setMsg("로그인 한 이용자만 사용가능한 서비스 입니다.");
+        setModalIsOpen(true);
+        return false;
+      }
+
+      if(quantity <= 0){
+        setMsg("주문할 수량을 입력해주세요.");
+        setModalIsOpen(true);
+
+        return false;
+      }
+
+
+      axiosApi.post('/orderCoin',{
+        "order_id":user.id,
+        "order_type":orderType,
+        "quantity":quantity,
+        "price":price,
+        "coin_name":coinId
+      })
+      .then(response => {
+        onFunction(coinId);
+        setMsg(quantity+" GTC 주문이 완료 되었습니다.");
+        setModalIsOpen(true);
+      })
+      .catch(error => console.log(error));
+
+    }
 
   return (
     <Container>
       <RadioGroup>
         <RadioLabel>
-          <RadioInput name="side" value="BUY" checked={side === 'BUY'} onChange={handleRadioChange} />
+          <RadioInput name="orderType" value="BUY" checked={orderType === 'BUY'} onChange={handleRadioChange} />
           매수
         </RadioLabel>
         <RadioLabel>
-          <RadioInput name="side" value="SELL" checked={side === 'SELL'} onChange={handleRadioChange} />
+          <RadioInput name="orderType" value="SELL" checked={orderType === 'SELL'} onChange={handleRadioChange} />
           매도
         </RadioLabel>
       </RadioGroup>
-      <form onSubmit={handleSubmit}>
         <InputWrapper>
           <InputLabel>수량:</InputLabel>
           <Input type="number" value={quantity} onChange={handleQuantityChange} />
@@ -121,8 +159,9 @@ function OrderForm({basicPrice}) {
           <InputLabel>가격:</InputLabel>
           <Input type="number" value={price} onChange={handlePriceChange} />
         </InputWrapper>
-        <Button type="submit" style={{ backgroundColor: buttonColor }}>{buttonText}</Button>
-      </form>
+        <Button type="button" onClick={handleOrderClick} style={{ backgroundColor: buttonColor }}>{buttonText}</Button>
+        {/* 모달 영역 */}
+        <CustomModal isOpen={modalIsOpen} onClose={closeModal} msg={msg} />
     </Container>
   );
 }

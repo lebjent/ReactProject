@@ -19,8 +19,12 @@ public class CoinDAOImpl implements CoinDAO {
 
     }
     
-    public List<PriceDTO> getCoinData(String coin_id) throws Exception{
+    public List<PriceDTO> getBuyData(String coin_id) throws Exception{
         return sql.selectList( "stockMapper.getBuyData", coin_id);
+    }
+
+    public List<PriceDTO> getSellData(String coin_id) throws Exception{
+        return sql.selectList( "stockMapper.getSellData", coin_id);
     }
 
 }

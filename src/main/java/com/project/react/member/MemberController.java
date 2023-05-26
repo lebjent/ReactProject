@@ -50,6 +50,8 @@ public class MemberController {
     @PostMapping("/memberLogin")
     public ResponseEntity<String> login(@RequestBody MemberDTO member) throws Exception {
         
+        log.info("로그인시도");
+
         try {
             boolean isValidLogin = service.isLoginValid(member,passwordEncoder);
             if (isValidLogin) {
@@ -67,4 +69,18 @@ public class MemberController {
 
     }
 
+    @PostMapping(value = "/getMemberInfo")
+    public MemberDTO getMemberInfo(@RequestBody MemberDTO dto) throws Exception {
+        
+        MemberDTO member = new MemberDTO();
+
+        try {
+            member = service.getMemberInfo(dto.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return member;
+
+    }
 }

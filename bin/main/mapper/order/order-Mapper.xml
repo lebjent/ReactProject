@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderMapper">
+
+    <!-- 1. 현재가격을 가져오는 로직 -->
+    <select id="getNowPrice" resultType="int" parameterType="String">
+        SELECT MARKET_PRICE
+        FROM COIN_INFO
+        WHERE COIN_ID = #{coin_name}
+    </select>
+
+    <!-- 2. 주문한 가격의 수량을 가져오는 로직 -->
+    <select id="getOrderQuantity" resultType="int" parameterType="OrderDTO">
+        SELECT NVL(MAX(QUANTITY),0)
+        FROM COIN_TRADE
+        WHERE COIN_ID = #{coin_name}
+        AND PRICE = #{price}
+        AND ORDER_TYPE = #{order_type}
+    </select>
+
+    <!-- 코인 주문시 테이블에 저장하는 로직 -->
+    <insert id="orderCoin" parameterType="OrderDTO">
+        INSERT INTO ORDER_TBL
+        (
+            ORDER_NO
+            ,ORDER_TYPE
+            ,COIN_NAME
+            ,ORDER_ID
+            ,PRICE
+            ,QUANTITY
+            ,ORDER_DATE
+        )
+        VALUES(
+            (SELECT NVL(MAX(ORDER_NO), 0) + 1 FROM ORDER_TBL),
+            #{order_type},
+            #{coin_name},
+            #{order_id},
+            #{price},
+            #{quantity},
+            SYSDATE
+        )
+    </insert>
+
+    <!-- 요청한금액의 매수데이터가 있는지 카운트하여 체크하는 용도 -->
+    <select id="chkBuyPrice" resultType="int" parameterType="OrderDTO">
+        SELECT NVL(COUNT(*),0)
+        FROM COIN_TRADE
+        WHERE PRICE = #{price}
+        AND ORDER_TYPE = 'BUY'
+    </select>
+
+    <!-- 요청한금액의 매수데이터가 있는지 카운트하여 체크하는 용도 -->
+    <select id="chkSellPrice" resultType="int" parameterType="OrderDTO">
+        SELECT NVL(COUNT(*),0)
+        FROM COIN_TRADE
+        WHERE PRICE = #{price}
+        AND ORDER_TYPE = 'SELL'
+    </select>
+
+    <!-- 신규 가격인 경우 -->
+    <insert id="insertCoinTradeData" parameterType="OrderDTO">
+        INSERT INTO COIN_TRADE
+        (
+            COIN_ID,
+            PRICE,
+            QUANTITY,
+            TRADE_DATE,
+            ORDER_TYPE
+        )
+        VALUES(
+            #{coin_name},
+            #{price},
+            #{quantity},
+            SYSDATE,
+            #{order_type}
+        )
+    </insert>
+
+    <!-- 기존에 가격이 있으면 UPDATE -->
+    <update id="updateCoinTradeData" parameterType="OrderDTO">
+        UPDATE COIN_TRADE
+        SET
+           QUANTITY = #{quantity},
+           TRADE_DATE = SYSDATE
+        WHERE PRICE = #{price}
+        AND ORDER_TYPE = #{order_type}    
+    </update>
+
+    
+
+</mapper>

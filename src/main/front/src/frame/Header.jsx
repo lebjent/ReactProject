@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from 'styled-components';
 import BasicButton from '../ui/BasicButton';
 import mainlogo from '../image/icon/logo.png'
 import { Link } from 'react-router-dom';
+import { LoginContext } from "../LoginContext";
 
 const HeaderTag = styled.div`
   display: flex;
@@ -38,7 +39,29 @@ const SlachSpan = styled.span`
     font-weight: bold;
 `;
 
+
+/* 로그인시 개인 정보 */
+const InfoTitle = styled.span`
+  font-weight: bold;
+  color: #125666;
+`
+
+const LogoutButton = styled.button`
+  width: 100px;
+  height: 40px;
+  margin-top: 20px;
+  background-color: #990a11;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
 function Header() {
+
+  const { loginValid, handleLogout,userInfo } = useContext(LoginContext);
+
   return (
     <div>
     <HeaderTag>
@@ -56,6 +79,7 @@ function Header() {
           <NavLink className="nav" to='/developPage'>개발중인 페이지</NavLink>
         </Nav>
       </HeaderTag>
+      {!loginValid &&
       <MemberInfoDiv>
         <Link to='/LoginPage'>
           <BasicButton value={'LOGIN'} bgColor={'primary'}/>
@@ -65,6 +89,15 @@ function Header() {
           <BasicButton value={'JOIN'} bgColor={'success'}/>
         </Link>
       </MemberInfoDiv>
+      }
+      {loginValid && (
+        <MemberInfoDiv>
+          <InfoTitle>나의 INFO</InfoTitle>
+          <br/>
+          <p>{userInfo.name} 님</p>
+          <LogoutButton onClick={handleLogout}>LogOut</LogoutButton>
+        </MemberInfoDiv>
+      )}
     </div>
   );
 }

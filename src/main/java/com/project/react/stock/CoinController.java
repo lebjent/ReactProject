@@ -1,7 +1,7 @@
 package com.project.react.stock;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,15 +31,15 @@ public class CoinController {
     }
 
 	@GetMapping(value="/getCoinData/{coin_id}")
-	public List<PriceDTO> getCoinData(@PathVariable String coin_id) {
-		List<PriceDTO> resultList = new ArrayList<>();
+	public Map<String,Object> getCoinData(@PathVariable String coin_id) {
+		Map<String,Object> resultMap = new HashMap<>();
 		try{
-			resultList = service.getCoinData(coin_id);
+			resultMap = service.getCoinData(coin_id);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
-        return resultList;
+        return resultMap;
 	}
 	
 

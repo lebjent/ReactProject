@@ -17,6 +17,14 @@ public class MemberServiceImpl implements MemberService {
         return chkResult;
     }
 
+    public MemberDTO getMemberInfo(String id)throws Exception{
+
+        MemberDTO member = dao.getMemberInfo(id);
+        
+        return member;
+
+    }
+
     //회원가입(암호화처리 로직포함)
     public void memberJoin(MemberDTO member, PasswordEncoder encoder) throws Exception{
         

@@ -27,20 +27,22 @@ const Stock = () => {
       .catch(error => console.log(error))
   }, [coinId]);
 
-  useEffect(() => {
+  const getCoinData = (coinId) =>{
     axios.get('/react/getCoinData/' + coinId)
-      .then(response => {
-        const data = response.data;
-        const newBids = data.filter(item => item.order_type === 'SELL').map(item=> [item.price, item.quantity]);
-        const newAsks = data.filter(item => item.order_type === 'BUY').map(item => [item.price, item.quantity]).sort((a, b) => a[0] - b[0]);
-        setBook({ asks: newAsks, bids: newBids });
-      })
-      .catch(error => console.log(error));
-  }, [coinId]);
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      const newAsks = data.SELLDATA.filter(item => item.order_type === 'SELL').map(item=> [item.price, item.quantity]);
+      const newBids = data.BUYDATA.filter(item => item.order_type === 'BUY').map(item => [item.price, item.quantity]).sort((b, a) => a[0] - b[0]);
+      setBook({ asks: newAsks, bids: newBids });
+    })
+    .catch(error => console.log(error));
+  }
 
+  //코인의 데이터를 가져오기
   useEffect(() => {
-    console.log('book:', book);
-  }, [book]);
+    getCoinData(coinId);
+  }, [coinId]);
 
   return (
     <div>
@@ -50,14 +52,15 @@ const Stock = () => {
         <OrderBook
           askColor={[255, 47, 47]}
           bidColor={[0, 255, 255]}
-          book={book}//{asks:[['150','500']],bids:[['300','500']]}
+          book={book}
           fullOpacity={true}
           showSpread={false}
           interpolateColor={(color) => color}
           listLength={10}
           stylePrefix="MakeItNice"
+          onClick={(value)=>{console.log(value)}}
         />
-        {data.market_price && <OrderForm basicPrice={data.market_price}/>}
+        {data.market_price && <OrderForm basicPrice={data.market_price} coinId={coinId} onFunction={getCoinData} />}
       </AlignDiv>
     </div>
   );

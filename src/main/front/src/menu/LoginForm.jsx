@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CustomModal from '../modal/CustomModal';
 import axiosApi from '../axiosApi';
+import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../LoginContext';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -89,6 +91,10 @@ const Error = styled.div`
   margin-top: 0.25rem;
 `;
 
+const IdSaveLabel = styled.label`
+  font-size: 9pt;
+`
+
 const LoginButton = styled.button`
   width: 100%;
   height: 50px;
@@ -106,14 +112,30 @@ const LoginForm = () => {
   const [id,setId] = useState("");
   const [password,setPassword] = useState("");
   const [errorMsg,setErrorMsg] = useState("");
+  const [idChkYN,setIdChkYN] = useState(false);  
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem("saveId")){
+      setId(localStorage.getItem("saveId"));
+      setIdChkYN(true);
+    }
+  }, []);   
 
   /* 모달 관련 state */
-    //모달 상태
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const closeModal = () => {
-      setModalIsOpen(false);
-    };
-    const [msg,setMsg] = useState("");
+  //모달 상태
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+  const [msg,setMsg] = useState("");
+
+  const { handleLogin,handleGetUserInfo } = useContext(LoginContext);
+
+  const idSave = (e) => {
+    setIdChkYN(e.target.checked);
+  }
 
   const handleClickLogin = (e) =>{
     
@@ -132,6 +154,12 @@ const LoginForm = () => {
 
     }
 
+    if(idChkYN === true){
+      localStorage.setItem("saveId",id);
+    }else{
+      localStorage.removeItem("saveId")
+    }
+
     //axios를 사용하여 데이터 전송
     axiosApi
         .post('/memberLogin', {
@@ -142,7 +170,9 @@ const LoginForm = () => {
           console.log('로그인 성공', response);
           const token = response.headers.authorization;
           // 토큰을 로컬 스토리지에 저장
-          localStorage.setItem('token', token);
+          handleLogin(token);
+          handleGetUserInfo(id);
+          navigate('/');
         })
         .catch((error) => {
           console.log('로그인에 실패하였습니다.', error);
@@ -163,6 +193,10 @@ const LoginForm = () => {
           <Input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" />
       </Container>
       {errorMsg && <Error>{errorMsg}</Error>}
+      <Container>
+        <IdSaveLabel htmlFor="save">아이디저장</IdSaveLabel>
+        <input type="checkbox" id='save' onChange={idSave} checked={idChkYN} />
+      </Container>
       <LoginButton onClick={handleClickLogin}>Login</LoginButton>
       
       {/* 모달 영역 */}

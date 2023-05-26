@@ -1,7 +1,7 @@
 package com.project.react.stock;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,15 @@ public class CoinServicImpl implements CoinService {
 
     }
 
-    public List<PriceDTO> getCoinData(String coin_id) throws Exception{
+    public Map<String,Object> getCoinData(String coin_id) throws Exception{
 
-        List<PriceDTO> resultList = new ArrayList<>();
+        //Object 그릇
+        Map<String,Object> returnMap = new HashMap<>();
 
-        resultList = dao.getCoinData(coin_id);
+        returnMap.put("BUYDATA", dao.getBuyData(coin_id));
+        returnMap.put("SELLDATA", dao.getSellData(coin_id));
 
-        return resultList;
+        return returnMap;
 
     }
 

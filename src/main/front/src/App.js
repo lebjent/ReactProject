@@ -15,6 +15,7 @@ import StudyList from "./menu/StudyList";
 import DevelopPage from "./menu/Development";
 import MemberJoin from "./menu/MemberJoin";
 import LoginForm from "./menu/LoginForm";
+import { LoginProvider } from "./LoginContext";
 
 
 const AppWrapper = styled.div`
@@ -31,22 +32,24 @@ const Content = styled.div`
 function App() {
   return (
     <BrowserRouter>
-      <AppWrapper>
-        <Header />
-        <Content>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projectInfo" element={<ProjectInfo />} />
-            <Route path="/board/*" element={<Board />} />
-            <Route path="/studyList" element={<StudyList />} />
-            <Route path="/question" element={<Question />} />
-            <Route path="/developPage/*" element={<DevelopPage />} />
-            <Route path="/MemberJoin" element={<MemberJoin />} />
-            <Route path="/LoginPage" element={<LoginForm />} />
-          </Routes>
-        </Content>
-        <Footer />
-      </AppWrapper>
+      <LoginProvider>
+        <AppWrapper>
+          <Header />
+          <Content>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/projectInfo" element={<ProjectInfo />} />
+              <Route path="/board/*" element={<Board />} />
+              <Route path="/studyList" element={<StudyList />} />
+              <Route path="/question" element={<Question />} />
+              <Route path="/developPage/*" element={<DevelopPage />} />
+              <Route path="/MemberJoin" element={<MemberJoin />} />
+              <Route path="/LoginPage" element={<LoginForm />} />
+            </Routes>
+          </Content>
+          <Footer />
+        </AppWrapper>
+      </LoginProvider>
     </BrowserRouter>
   );
 }
